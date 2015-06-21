@@ -1,9 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--<item-->
+        <!--android:id="@+id/action_refresh"-->
+        <!--android:orderInCategory="100"-->
+        <!--android:showAsAction="always"-->
+        <!--android:icon="@drawable/ic_action_refresh"-->
+        <!--android:title="Refresh"/>-->
     <item
-        android:id="@+id/action_refresh"
-        android:orderInCategory="100"
-        android:showAsAction="always"
-        android:icon="@drawable/ic_action_refresh"
-        android:title="Refresh"/>
+        android:id="@+id/action_practice"
+        android:title="Practice"
+    />
+    <item
+        android:id="@+id/action_hilton_head"
+        android:title="Hilton Head"
+    />
+    <item
+        android:id="@+id/action_asheville"
+        android:title="Asheville"
+    />
+    <item
+        android:id="@+id/action_charlotte"
+        android:title="Charlotte"
+    />
+    <item
+        android:id="@+id/action_columbia"
+        android:title="Columbia"
+    />
+    <item
+        android:id="@+id/action_pines"
+        android:title="Southern Pines"
+    />
 </menu>

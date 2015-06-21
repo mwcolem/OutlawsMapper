@@ -19,6 +19,18 @@ public class MapsActivity extends FragmentActivity {
 
     private static final LatLng CHARLESTON =
             new LatLng(32.7833, -79.9333);
+    private static final LatLng PRACTICE =
+            new LatLng(32.7997811,-79.9604277);
+    private static final LatLng HILTON_HEAD=
+            new LatLng(32.1894928,-80.7488113);
+    private static final LatLng ASHEVILLE=
+            new LatLng(35.538932,-82.5654054);
+    private static final LatLng CHARLOTTE=
+            new LatLng(35.2031535,-80.8395259);
+    private static final LatLng COLUMBIA=
+            new LatLng(34.0375089,-80.9375649);
+    private static final LatLng PINES=
+            new LatLng(35.1907804,-79.4049955);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,14 +81,10 @@ public class MapsActivity extends FragmentActivity {
      */
     private void setUpMap() {
         UiSettings ui = mMap.getUiSettings();
-        mMap.addMarker(new MarkerOptions().position(CHARLESTON).title("Marker"));
-//        mMap.moveCamera(CameraUpdateFactory.newLatLng(CHARLESTON));
-//        mMap.moveCamera(CameraUpdateFactory.kzoomTo(17));
+//        mMap.addMarker(new MarkerOptions().position(CHARLESTON).title("Marker"));
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(CHARLESTON) // Sets the center of the map to
-//                .zoom(17)                   // Sets the zoom
-                .bearing(90) // Sets the orientation of the camera to east
-//                .tilt(30)    // Sets the tilt of the camera to 30 degrees
+                .zoom(10f)
                 .build();    // Creates a CameraPosition from the builder
         mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         ui.setZoomControlsEnabled(true);
@@ -90,11 +98,58 @@ public class MapsActivity extends FragmentActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
+        CameraPosition cp;
         switch (item.getItemId()) {
-
-            case R.id.action_refresh:
+            case R.id.action_practice:
+                cp = new CameraPosition.Builder()
+                        .target(PRACTICE)
+                        .zoom(13f)
+                        .build();
+                mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cp));
+                mMap.addMarker(new MarkerOptions().position(PRACTICE).title("Practice"));
                 break;
+            case R.id.action_hilton_head:
+                cp = new CameraPosition.Builder()
+                        .target(HILTON_HEAD)
+                        .zoom(13f)
+                        .build();
+                mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cp));
+                mMap.addMarker(new MarkerOptions().position(HILTON_HEAD).title("Hilton Head"));
+                break;
+            case R.id.action_asheville:
+                CameraPosition cpAsheville = new CameraPosition.Builder()
+                        .target(ASHEVILLE)
+                        .zoom(13f)
+                        .build();
+                mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cpAsheville));
+                mMap.addMarker(new MarkerOptions().position(ASHEVILLE).title("Asheville"));
+                break;
+            case R.id.action_charlotte:
+                CameraPosition cpCharlotte = new CameraPosition.Builder()
+                        .target(CHARLOTTE)
+                        .zoom(13f)
+                        .build();
+                mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cpCharlotte));
+                mMap.addMarker(new MarkerOptions().position(CHARLOTTE).title("Charlotte"));
+                break;
+            case R.id.action_columbia:
+                CameraPosition cpColumbia = new CameraPosition.Builder()
+                        .target(COLUMBIA)
+                        .zoom(13f)
+                        .build();
+                mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cpColumbia));
+                mMap.addMarker(new MarkerOptions().position(COLUMBIA).title("Columbia"));
+                break;
+            case R.id.action_pines:
+                CameraPosition cpPines = new CameraPosition.Builder()
+                        .target(PINES)
+                        .zoom(13f)
+                        .build();
+                mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cpPines));
+                mMap.addMarker(new MarkerOptions().position(PINES).title("Southern Pines"));
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
         }
         return true;
     }
