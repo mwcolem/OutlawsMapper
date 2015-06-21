@@ -117,35 +117,35 @@ public class MapsActivity extends FragmentActivity {
                 mMap.addMarker(new MarkerOptions().position(HILTON_HEAD).title("Hilton Head"));
                 break;
             case R.id.action_asheville:
-                CameraPosition cpAsheville = new CameraPosition.Builder()
+                cp = new CameraPosition.Builder()
                         .target(ASHEVILLE)
                         .zoom(13f)
                         .build();
-                mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cpAsheville));
+                mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cp));
                 mMap.addMarker(new MarkerOptions().position(ASHEVILLE).title("Asheville"));
                 break;
             case R.id.action_charlotte:
-                CameraPosition cpCharlotte = new CameraPosition.Builder()
+                cp = new CameraPosition.Builder()
                         .target(CHARLOTTE)
                         .zoom(13f)
                         .build();
-                mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cpCharlotte));
+                mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cp));
                 mMap.addMarker(new MarkerOptions().position(CHARLOTTE).title("Charlotte"));
                 break;
             case R.id.action_columbia:
-                CameraPosition cpColumbia = new CameraPosition.Builder()
+                cp = new CameraPosition.Builder()
                         .target(COLUMBIA)
                         .zoom(13f)
                         .build();
-                mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cpColumbia));
+                mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cp));
                 mMap.addMarker(new MarkerOptions().position(COLUMBIA).title("Columbia"));
                 break;
             case R.id.action_pines:
-                CameraPosition cpPines = new CameraPosition.Builder()
+                cp = new CameraPosition.Builder()
                         .target(PINES)
                         .zoom(13f)
                         .build();
-                mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cpPines));
+                mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cp));
                 mMap.addMarker(new MarkerOptions().position(PINES).title("Southern Pines"));
                 break;
             default:
