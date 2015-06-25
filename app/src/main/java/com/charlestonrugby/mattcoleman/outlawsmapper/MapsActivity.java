@@ -1,5 +1,8 @@
 package com.charlestonrugby.mattcoleman.outlawsmapper;
 
+import java.io.IOException;
+import java.util.HashMap;
+
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,30 +16,47 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.CameraPosition;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class MapsActivity extends FragmentActivity {
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
 
+    private HashMap<String, LatLng> locations;
+
     private static final LatLng CHARLESTON =
             new LatLng(32.7833, -79.9333);
-    private static final LatLng PRACTICE =
-            new LatLng(32.7997811,-79.9604277);
-    private static final LatLng HILTON_HEAD=
-            new LatLng(32.1894928,-80.7488113);
-    private static final LatLng ASHEVILLE=
-            new LatLng(35.538932,-82.5654054);
-    private static final LatLng CHARLOTTE=
-            new LatLng(35.2031535,-80.8395259);
-    private static final LatLng COLUMBIA=
-            new LatLng(34.0375089,-80.9375649);
-    private static final LatLng PINES=
-            new LatLng(35.1907804,-79.4049955);
+//    private static final LatLng PRACTICE =
+//            new LatLng(32.7997811,-79.9604277);
+//    private static final LatLng HILTON_HEAD=
+//            new LatLng(32.1894928,-80.7488113);
+//    private static final LatLng ASHEVILLE=
+//            new LatLng(35.538932,-82.5654054);
+//    private static final LatLng CHARLOTTE=
+//            new LatLng(35.2031535,-80.8395259);
+//    private static final LatLng COLUMBIA=
+//            new LatLng(34.0375089,-80.9375649);
+//    private static final LatLng PINES=
+//            new LatLng(35.1907804,-79.4049955);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        locations = new HashMap<>();
+        locations.put("practice", new LatLng(0,0));
+        locations.put("hilton_head", new LatLng(0,0));
+        locations.put("asheville", new LatLng(0,0));
+        locations.put("charlotte", new LatLng(0,0));
+        locations.put("columbia", new LatLng(0,0));
+        locations.put("southern_pines", new LatLng(0,0));
+
         setContentView(R.layout.activity_maps);
         setUpMapIfNeeded();
+
+        populateAddressesFromJSON();
     }
 
     @Override
@@ -74,14 +94,10 @@ public class MapsActivity extends FragmentActivity {
     }
 
     /**
-     * This is where we can add markers or lines, add listeners or move the camera. In this case, we
-     * just add a marker near Africa.
-     * <p/>
      * This should only be called once and when we are sure that {@link #mMap} is not null.
      */
     private void setUpMap() {
         UiSettings ui = mMap.getUiSettings();
-//        mMap.addMarker(new MarkerOptions().position(CHARLESTON).title("Marker"));
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(CHARLESTON) // Sets the center of the map to
                 .zoom(10f)
@@ -102,55 +118,73 @@ public class MapsActivity extends FragmentActivity {
         switch (item.getItemId()) {
             case R.id.action_practice:
                 cp = new CameraPosition.Builder()
-                        .target(PRACTICE)
+                        .target(locations.get("practice"))
                         .zoom(13f)
                         .build();
                 mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cp));
-                mMap.addMarker(new MarkerOptions().position(PRACTICE).title("Practice"));
+                mMap.addMarker(new MarkerOptions().position(locations.get("practice")).title("Practice"));
                 break;
             case R.id.action_hilton_head:
                 cp = new CameraPosition.Builder()
-                        .target(HILTON_HEAD)
+                        .target(locations.get("hilton_head"))
                         .zoom(13f)
                         .build();
                 mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cp));
-                mMap.addMarker(new MarkerOptions().position(HILTON_HEAD).title("Hilton Head"));
+                mMap.addMarker(new MarkerOptions().position(locations.get("hilton_head")).title("Hilton Head"));
                 break;
             case R.id.action_asheville:
                 cp = new CameraPosition.Builder()
-                        .target(ASHEVILLE)
+                        .target(locations.get("asheville"))
                         .zoom(13f)
                         .build();
                 mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cp));
-                mMap.addMarker(new MarkerOptions().position(ASHEVILLE).title("Asheville"));
+                mMap.addMarker(new MarkerOptions().position(locations.get("asheville")).title("Asheville"));
                 break;
             case R.id.action_charlotte:
                 cp = new CameraPosition.Builder()
-                        .target(CHARLOTTE)
+                        .target(locations.get("charlotte"))
                         .zoom(13f)
                         .build();
                 mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cp));
-                mMap.addMarker(new MarkerOptions().position(CHARLOTTE).title("Charlotte"));
+                mMap.addMarker(new MarkerOptions().position(locations.get("charlotte")).title("Charlotte"));
                 break;
             case R.id.action_columbia:
                 cp = new CameraPosition.Builder()
-                        .target(COLUMBIA)
+                        .target(locations.get("columbia"))
                         .zoom(13f)
                         .build();
                 mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cp));
-                mMap.addMarker(new MarkerOptions().position(COLUMBIA).title("Columbia"));
+                mMap.addMarker(new MarkerOptions().position(locations.get("columbia")).title("Columbia"));
                 break;
             case R.id.action_pines:
                 cp = new CameraPosition.Builder()
-                        .target(PINES)
+                        .target(locations.get("southern_pines"))
                         .zoom(13f)
                         .build();
                 mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cp));
-                mMap.addMarker(new MarkerOptions().position(PINES).title("Southern Pines"));
+                mMap.addMarker(new MarkerOptions().position(locations.get("southern_pines")).title("Southern Pines"));
                 break;
             default:
                 return super.onOptionsItemSelected(item);
         }
         return true;
+    }
+
+    private void populateAddressesFromJSON() {
+        JSONHandler handler = new JSONHandler();
+        JSONObject addresses = handler.getJSONFromUrl("http://charlestonrugby.com/mobile/addresses.json");
+        try{
+            JSONArray jsonArray = addresses.getJSONArray("addresses");
+            for (int i=0; i<jsonArray.length();i++) {
+                JSONObject row = jsonArray.getJSONObject(i);
+                String city = row.getString("city");
+                if (locations.containsKey(city)) {
+//                    locations.put(city, (LatLng)row.get("location"));
+//                    locations.put(city, new LatLng(row.getDouble("lat"), row.getDouble("long")));
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }
