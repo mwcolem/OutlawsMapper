@@ -1,6 +1,5 @@
 package com.charlestonrugby.mattcoleman.outlawsmapper;
 
-import java.io.IOException;
 import java.util.HashMap;
 
 import android.support.v4.app.FragmentActivity;
@@ -22,36 +21,22 @@ import org.json.JSONObject;
 
 public class MapsActivity extends FragmentActivity {
 
-    private GoogleMap mMap; // Might be null if Google Play services APK is not available.
+    private GoogleMap mMap;
 
     private HashMap<String, LatLng> locations;
-
-    private static final LatLng CHARLESTON =
-            new LatLng(32.7833, -79.9333);
-//    private static final LatLng PRACTICE =
-//            new LatLng(32.7997811,-79.9604277);
-//    private static final LatLng HILTON_HEAD=
-//            new LatLng(32.1894928,-80.7488113);
-//    private static final LatLng ASHEVILLE=
-//            new LatLng(35.538932,-82.5654054);
-//    private static final LatLng CHARLOTTE=
-//            new LatLng(35.2031535,-80.8395259);
-//    private static final LatLng COLUMBIA=
-//            new LatLng(34.0375089,-80.9375649);
-//    private static final LatLng PINES=
-//            new LatLng(35.1907804,-79.4049955);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         locations = new HashMap<>();
-        locations.put("practice", new LatLng(0,0));
-        locations.put("hilton_head", new LatLng(0,0));
-        locations.put("asheville", new LatLng(0,0));
-        locations.put("charlotte", new LatLng(0,0));
-        locations.put("columbia", new LatLng(0,0));
-        locations.put("southern_pines", new LatLng(0,0));
+        locations.put("home", new LatLng(32.7278633,-79.9388181));
+        locations.put("practice", new LatLng(32.7997811,-79.9604277));
+        locations.put("hilton_head", new LatLng(32.1894928,-80.7488113));
+        locations.put("asheville", new LatLng(35.538932,-82.5654054));
+        locations.put("charlotte", new LatLng(35.2031535,-80.8395259));
+        locations.put("columbia", new LatLng(34.0375089,-80.9375649));
+        locations.put("southern_pines", new LatLng(35.1907804,-79.4049955));
 
         setContentView(R.layout.activity_maps);
         setUpMapIfNeeded();
@@ -99,7 +84,7 @@ public class MapsActivity extends FragmentActivity {
     private void setUpMap() {
         UiSettings ui = mMap.getUiSettings();
         CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(CHARLESTON) // Sets the center of the map to
+                .target(new LatLng(32.7833, -79.9333)) // Sets the center of the map to
                 .zoom(10f)
                 .build();    // Creates a CameraPosition from the builder
         mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
@@ -116,6 +101,14 @@ public class MapsActivity extends FragmentActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         CameraPosition cp;
         switch (item.getItemId()) {
+            case R.id.action_home:
+                cp = new CameraPosition.Builder()
+                        .target(locations.get("home"))
+                        .zoom(13f)
+                        .build();
+                mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cp));
+                mMap.addMarker(new MarkerOptions().position(locations.get("home")).title("Home Pitch"));
+                break;
             case R.id.action_practice:
                 cp = new CameraPosition.Builder()
                         .target(locations.get("practice"))
@@ -179,8 +172,7 @@ public class MapsActivity extends FragmentActivity {
                 JSONObject row = jsonArray.getJSONObject(i);
                 String city = row.getString("city");
                 if (locations.containsKey(city)) {
-//                    locations.put(city, (LatLng)row.get("location"));
-//                    locations.put(city, new LatLng(row.getDouble("lat"), row.getDouble("long")));
+                    locations.put(city, new LatLng(row.getDouble("lat"), row.getDouble("long")));
                 }
             }
         } catch (JSONException e) {
