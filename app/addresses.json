@@ -1,5 +1,6 @@
 {"addresses":[
 	{"city":"charleston", "lat":"32.7833", "long": "-79.9333"},
+	{"city":"home", "lat":"32.7278633", "long":"-79.9388181"},
 	{"city":"practice", "lat":"32.7997811", "long": "-79.9604277"},
 	{"city":"hilton_head", "lat":"32.1894928", "long": "-80.7488113"},
 	{"city":"asheville", "lat":"35.538932", "long": "-82.5654054"},
